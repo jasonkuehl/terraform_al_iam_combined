@@ -1,6 +1,6 @@
 Sample Terraform to deploy Alert Logic related IAM roles
 =================
-This is collections of modules to deploy: 
+This is collections of modules to deploy:
 
 - Cloud Insight IAM Policy + Role
 - Threat Manager IAM Policy + Role
@@ -25,5 +25,6 @@ License and Authors
 License:
 Distributed under the Apache 2.0 license.
 
-Authors: 
+Authors:
 Welly Siauw (welly.siauw@alertlogic.com)
+jason Kuehl (kuehl@sessionm.com)

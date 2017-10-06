@@ -1,21 +1,12 @@
-# Alert Logic sample Terraform template for deploying:
-# 1. Threat Manager Cross Account Role
-# 2. Cloud Insight Cross Account Role
-# 3. Log Manager Cloud Trail Cross Account Role + SQS
-
-provider "aws" {
-    profile = "default"
-    region = "us-west-1"
-}
-
 #
 # Module for Cloud Insight Cross Account Role
 # Output the IAM role ARN to be inputed back to Alert Logic Cloud Insight UI
 #
 module "cloud_insight_role" {
   source = "./CI_CrossAccount"
+
   alert_logic_aws_account_id = "${var.alert_logic_aws_account_id}"
-  alert_logic_external_id = "${var.alert_logic_external_id}"
+  alert_logic_external_id    = "${var.alert_logic_external_id}"
 }
 
 #
@@ -24,8 +15,9 @@ module "cloud_insight_role" {
 #
 module "threat_manager_role" {
   source = "./TM_CrossAccount"
+
   alert_logic_aws_account_id = "${var.alert_logic_aws_account_id}"
-  alert_logic_external_id = "${var.alert_logic_external_id}"
+  alert_logic_external_id    = "${var.alert_logic_external_id}"
 }
 
 #
@@ -34,9 +26,27 @@ module "threat_manager_role" {
 #
 module "log_manager_cloudtrail" {
   source = "./LM_CloudTrail"
-  alert_logic_aws_account_id = "${var.alert_logic_aws_account_id}"
-  alert_logic_external_id = "${var.alert_logic_external_id}"
-  cloudtrail_sns_arn = "${var.cloudtrail_sns_arn}"
-  cloudtrail_s3 = "${var.cloudtrail_s3}"
+
+  alert_logic_aws_account_id    = "${var.alert_logic_aws_account_id}"
+  alert_logic_external_id       = "${var.alert_logic_external_id}"
+  cloudtrail_sns_arn            = "${var.cloudtrail_sns_arn}"
+  cloudtrail_s3                 = "${var.cloudtrail_s3}"
   alert_logic_lm_aws_account_id = "${var.alert_logic_lm_aws_account_id}"
+}
+
+#Threat Manger Instance
+
+module "threat_manger_instance" {
+  source = "./Threat_Manger_Instance"
+
+  instance_count   = "1"
+  primary_key_pair = ""
+  vpc_id           = ""
+  sn               = []
+  zones            = []
+  instance_type    = "c4.xlarge"
+  tag_name         = "threat_manger"
+  claimCIDR        = ""
+  monitoringCIDR   = ""
+  puppet_env       = "${var.env_name}" # Envirment Name
 }

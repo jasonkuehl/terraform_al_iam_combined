@@ -1,5 +1,3 @@
-# Template to deploy the required IAM policy and IAM role for Cloud Insight
-
 #
 # IAM Role for Cloud Insight
 #
@@ -267,11 +265,4 @@ EOF
 resource "aws_iam_role_policy_attachment" "alertlogic_cloud_insight_attachment" {
     role       = "${aws_iam_role.alertlogic_cloud_insight_role.name}"
     policy_arn = "${aws_iam_policy.alertlogic_cloud_insight_policy.arn}"
-}
-
-#
-# Set output
-#
-output "alertlogic_cloud_insight_target_iam_role_arn" {
-  value = "${aws_iam_role.alertlogic_cloud_insight_role.arn}"
 }
